@@ -15,3 +15,5 @@
 ###< friendsofphp/php-cs-fixer ###
 
 node_modules
+docker/data/*
+!docker/data/.gitkeep

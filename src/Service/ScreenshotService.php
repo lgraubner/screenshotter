@@ -2,32 +2,37 @@
 
 namespace App\Service;
 
-use Nesk\Puphpeteer\Puppeteer;
+use Spatie\Browsershot\Browsershot;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Symfony\Component\Finder\Finder;
 
 class ScreenshotService
 {
-    private $puppeteer;
+    private $parameterBag;
 
-    public function __construct()
+    public function __construct(ParameterBagInterface $parameterBag)
     {
-        $this->puppeteer = new Puppeteer();
+        $this->parameterBag = $parameterBag;
     }
 
-    public function screenshot(string $url)
+    public function execute(string $url)
     {
-        // @TODO: fix
-        $browser = $this->puppeteer->launch([
-            'args' => ['--no-sandbox', '--disable-setuid-sandbox'],
-        ]);
+        $filename = sprintf('%s.jpg', hash('sha256', $url));
+        $screenshotDir = $this->parameterBag->get('screenshot_dir');
 
-        $page = $browser->newPage();
-        $page->goto($url);
+        $finder = new Finder();
 
-        $page->screenshot([
-            'path' => '/var/www/symfony/screenshot.png',
-            'fullPage' => true,
-        ]);
+        $path = sprintf('%s/%s', $screenshotDir, $filename);
 
-        $browser->close();
+        $cacheTime = strtotime('-30 minutes');
+
+        $finder->files()->in($screenshotDir)->name($filename)->date(sprintf('>= %s', date('Y-m-d', $cacheTime)));
+
+        // @TODO: put vars in config
+        if (!$finder->hasResults()) {
+            Browsershot::url($url)->noSandbox()->setScreenshotType('jpeg', 70)->windowSize(1200, 800)->dismissDialogs()->waitUntilNetworkIdle()->save($path);
+        }
+
+        return $path;
     }
 }

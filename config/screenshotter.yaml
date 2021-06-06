@@ -1,0 +1,15 @@
+screenshotter:
+    dir: '%kernel.project_dir%/public/screenshots'
+
+    defaults:
+        width: 1280
+        height: 800
+
+        fullPage: false
+
+        quality: 70
+        delay: 1
+
+        fileExtension: jpeg
+
+        cache: 30
