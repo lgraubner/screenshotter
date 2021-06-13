@@ -28,11 +28,12 @@ class ScreenshotService
 
         $finder->files()->in($screenshotDir)->name($filename)->date(sprintf('>= %s', date('Y-m-d', $cacheTime)));
 
-        // @TODO: put vars in config
+        // @TODO: put vars in config, use factory?
         if (!$finder->hasResults()) {
             Browsershot::url($url)->noSandbox()->setScreenshotType('jpeg', 70)->windowSize(1200, 800)->dismissDialogs()->waitUntilNetworkIdle()->save($path);
         }
 
+        // @TODO: return screenshot model
         return $path;
     }
 }

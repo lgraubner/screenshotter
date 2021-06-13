@@ -17,7 +17,7 @@ class ScreenshotController extends AbstractController
     /**
      * @Route("/screenshot", name="app_screenshot", methods={"POST", "GET"})
      */
-    public function index(Request $request, ScreenshotService $screenshotService): Response
+    public function index(Request $request): Response
     {
         $form = $this->createForm(ScreenshotType::class);
 
@@ -26,7 +26,7 @@ class ScreenshotController extends AbstractController
         $form->submit($data);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $path = $screenshotService->execute($form->getData()['url']);
+            $path = $this->get(ScreenshotService::class)->execute($form->getData()['url']);
 
             $response = new BinaryFileResponse($path);
 
@@ -41,5 +41,12 @@ class ScreenshotController extends AbstractController
         }
 
         throw new BadRequestHttpException('Invalid data');
+    }
+
+    public static function getSubscribedServices(): array
+    {
+        return array_merge(parent::getSubscribedServices(), [
+            ScreenshotService::class
+        ]);
     }
 }

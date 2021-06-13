@@ -17,3 +17,5 @@
 node_modules
 docker/data/*
 !docker/data/.gitkeep
+public/screenshots/*
+!public/screenshots/.gitkeep
