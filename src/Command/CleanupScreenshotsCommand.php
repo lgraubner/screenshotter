@@ -16,7 +16,7 @@ class CleanupScreenshotsCommand extends Command
     protected static $defaultName = 'app:cleanup-screenshots';
     protected static $defaultDescription = 'Cleans screenshot folder removing files older than specified day threshold.';
 
-    const DEFAULT_DAYS = 30;
+    public const DEFAULT_DAYS = 30;
 
     /**
      * @var ParameterBagInterface

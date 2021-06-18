@@ -26,9 +26,10 @@ class ScreenshotController extends AbstractController
         $form->submit($data);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $path = $this->get(ScreenshotService::class)->execute($form->getData()['url']);
+            /** @var Screenshot */
+            $screenshot = $this->get(ScreenshotService::class)->execute($data['url']);
 
-            $response = new BinaryFileResponse($path);
+            $response = new BinaryFileResponse($screenshot->getPath());
 
             $disposition = HeaderUtils::makeDisposition(
                 HeaderUtils::DISPOSITION_INLINE,
@@ -46,7 +47,7 @@ class ScreenshotController extends AbstractController
     public static function getSubscribedServices(): array
     {
         return array_merge(parent::getSubscribedServices(), [
-            ScreenshotService::class
+            ScreenshotService::class,
         ]);
     }
 }

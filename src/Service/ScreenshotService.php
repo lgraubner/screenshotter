@@ -2,20 +2,23 @@
 
 namespace App\Service;
 
-use Spatie\Browsershot\Browsershot;
+use App\Factory\BrowsershotFactory;
+use App\Model\Screenshot;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Finder\Finder;
 
 class ScreenshotService
 {
     private $parameterBag;
+    private $browsershotFactory;
 
-    public function __construct(ParameterBagInterface $parameterBag)
+    public function __construct(ParameterBagInterface $parameterBag, BrowsershotFactory $browsershotFactory)
     {
         $this->parameterBag = $parameterBag;
+        $this->browsershotFactory = $browsershotFactory;
     }
 
-    public function execute(string $url)
+    public function execute(string $url): Screenshot
     {
         $filename = sprintf('%s.jpg', hash('sha256', $url));
         $screenshotDir = $this->parameterBag->get('screenshot_dir');
@@ -24,16 +27,22 @@ class ScreenshotService
 
         $path = sprintf('%s/%s', $screenshotDir, $filename);
 
+        // @TODO: fill with options + url
+        $screenshot = new Screenshot();
+        $screenshot->setPath($path);
+
         $cacheTime = strtotime('-30 minutes');
 
         $finder->files()->in($screenshotDir)->name($filename)->date(sprintf('>= %s', date('Y-m-d', $cacheTime)));
 
-        // @TODO: put vars in config, use factory?
+        // @TODO: put vars in config?
         if (!$finder->hasResults()) {
-            Browsershot::url($url)->noSandbox()->setScreenshotType('jpeg', 70)->windowSize(1200, 800)->dismissDialogs()->waitUntilNetworkIdle()->save($path);
+            $browsershot = $this->browsershotFactory->create();
+            // @TODO: pass screenshot in?
+
+            $browsershot->setUrl($url)->save($path);
         }
 
-        // @TODO: return screenshot model
-        return $path;
+        return $screenshot;
     }
 }

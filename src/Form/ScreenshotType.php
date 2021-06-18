@@ -19,7 +19,7 @@ class ScreenshotType extends AbstractType
                 'constraints' => [
                     new NotBlank(),
                     new Url(),
-                ]
+                ],
             ])
         ;
     }

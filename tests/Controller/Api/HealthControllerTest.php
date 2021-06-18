@@ -9,9 +9,14 @@ class HealthControllerTest extends WebTestCase
     public function testSomething(): void
     {
         $client = static::createClient();
-        $crawler = $client->request('GET', '/api/v1/health');
+        $client->request('GET', '/api/v1/health');
 
         $this->assertResponseIsSuccessful();
-        $this->assertResponseStatusCodeSame(200);
+
+        $response = $client->getResponse();
+        $data = json_decode($response->getContent(), true);
+
+        $this->assertArrayHasKey('status', $data);
+        $this->assertEquals('ok', $data['status']);
     }
 }
