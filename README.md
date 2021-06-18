@@ -9,4 +9,4 @@ API for creating Screenshots of a website.
 - Tests
 - caching verbessern
 - Storage adapters?
-
+- Deploy
