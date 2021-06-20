@@ -6,13 +6,20 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class ScreenshotControllerTest extends WebTestCase
 {
-    public function testSomething(): void
+    public function testInvalidPayload(): void
     {
-        $this->markTestIncomplete();
-        // $client = static::createClient();
-        // $crawler = $client->request('GET', '/');
+        $client = static::createClient();
+        $client->request('GET', '/api/v1/screenshot');
 
-        // $this->assertResponseIsSuccessful();
-        // $this->assertSelectorTextContains('h1', 'Hello World');
+        $this->assertResponseStatusCodeSame(400);
+    }
+
+    public function testCreatesScreenshot(): void
+    {
+        $client = static::createClient();
+        // @TODO: use json request
+        $client->request('GET', '/api/v1/screenshot?url=https://google.com');
+
+        $this->assertResponseIsSuccessful();
     }
 }

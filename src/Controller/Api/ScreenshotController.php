@@ -3,6 +3,7 @@
 namespace App\Controller\Api;
 
 use App\Form\ScreenshotType;
+use App\Model\Screenshot;
 use App\Service\ScreenshotService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
@@ -26,14 +27,14 @@ class ScreenshotController extends AbstractController
         $form->submit($data);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            /** @var Screenshot */
+            /** @var Screenshot $screenshot */
             $screenshot = $this->get(ScreenshotService::class)->execute($data['url']);
 
             $response = new BinaryFileResponse($screenshot->getPath());
 
             $disposition = HeaderUtils::makeDisposition(
                 HeaderUtils::DISPOSITION_INLINE,
-                'foo.jpg'
+                $screenshot->getFilename()
             );
 
             $response->headers->set('Content-Disposition', $disposition);

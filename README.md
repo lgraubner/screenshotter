@@ -4,9 +4,8 @@ API for creating Screenshots of a website.
 
 ## Todo
 
-- logging verbessern
+- Improve options + Screenshot Model handling
 - Security with token
 - Tests
-- caching verbessern
-- Storage adapters?
 - Deploy
+- fix puppeteer issues

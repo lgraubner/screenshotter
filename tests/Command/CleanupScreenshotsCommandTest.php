@@ -8,7 +8,7 @@ use Symfony\Component\Console\Tester\CommandTester;
 
 class CleanupScreenshotsCommandTest extends KernelTestCase
 {
-    public function testSomething(): void
+    public function testExecutesSuccessfully(): void
     {
         $kernel = static::createKernel();
         $application = new Application($kernel);

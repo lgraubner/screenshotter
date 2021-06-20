@@ -8,14 +8,12 @@ use Spatie\Browsershot\Browsershot;
 
 class BrowsershotFactoryTest extends TestCase
 {
-    public function testSomething(): void
+    public function testCreatesBrowsershotInstance(): void
     {
         $factory = new BrowsershotFactory();
 
-        $browsershot = $factory->create();
+        $browsershot = $factory->create('https://google.com');
 
         $this->assertInstanceOf(Browsershot::class, $browsershot);
-
-        $this->markTestIncomplete('Test options');
     }
 }
