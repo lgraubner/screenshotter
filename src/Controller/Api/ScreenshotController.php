@@ -2,6 +2,7 @@
 
 namespace App\Controller\Api;
 
+use App\Controller\FormErrorTrait;
 use App\Form\ScreenshotType;
 use App\Model\Screenshot;
 use App\Service\ScreenshotService;
@@ -15,6 +16,8 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ScreenshotController extends AbstractController
 {
+    use FormErrorTrait;
+
     /**
      * @Route("/screenshot", name="app_screenshot", methods={"POST", "GET"})
      */
@@ -42,9 +45,8 @@ class ScreenshotController extends AbstractController
             return $response;
         }
 
-        dump($form->getErrors(true));
-
         // @TODO: print errors
+        //dump(self::formatFormError($form));
         throw new BadRequestHttpException('Invalid data');
     }
 
