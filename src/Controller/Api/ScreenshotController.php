@@ -42,6 +42,9 @@ class ScreenshotController extends AbstractController
             return $response;
         }
 
+        dump($form->getErrors(true));
+
+        // @TODO: print errors
         throw new BadRequestHttpException('Invalid data');
     }
 
