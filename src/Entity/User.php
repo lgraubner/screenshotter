@@ -22,7 +22,7 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="string", length=180, unique=true)
      */
-    private $email;
+    private $apiToken;
 
     /**
      * @ORM\Column(type="json")
@@ -40,14 +40,14 @@ class User implements UserInterface
         return $this->id;
     }
 
-    public function getEmail(): ?string
+    public function getApiToken(): ?string
     {
-        return $this->email;
+        return $this->apiToken;
     }
 
-    public function setEmail(string $email): self
+    public function setApiToken(string $apiToken): self
     {
-        $this->email = $email;
+        $this->apiToken = $apiToken;
 
         return $this;
     }
@@ -59,7 +59,7 @@ class User implements UserInterface
      */
     public function getUsername(): string
     {
-        return (string) $this->email;
+        return (string) $this->apiToken;
     }
 
     /**
