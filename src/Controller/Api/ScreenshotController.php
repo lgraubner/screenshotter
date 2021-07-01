@@ -2,7 +2,7 @@
 
 namespace App\Controller\Api;
 
-use App\Controller\FormErrorTrait;
+use App\Exception\InvalidFormException;
 use App\Form\ScreenshotType;
 use App\Model\Screenshot;
 use App\Service\ScreenshotService;
@@ -11,13 +11,10 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\HeaderUtils;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
 class ScreenshotController extends AbstractController
 {
-    use FormErrorTrait;
-
     /**
      * @Route("/screenshot", name="app_screenshot", methods={"POST", "GET"})
      */
@@ -45,9 +42,7 @@ class ScreenshotController extends AbstractController
             return $response;
         }
 
-        // @TODO: print errors
-        //dump(self::formatFormError($form));
-        throw new BadRequestHttpException('Invalid data');
+        throw new InvalidFormException($form, 'Invalid data');
     }
 
     public static function getSubscribedServices(): array

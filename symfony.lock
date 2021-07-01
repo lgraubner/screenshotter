@@ -371,9 +371,6 @@
     "symfony/http-kernel": {
         "version": "v5.2.9"
     },
-    "symfony/intl": {
-        "version": "v5.2.7"
-    },
     "symfony/maker-bundle": {
         "version": "1.0",
         "recipe": {
@@ -504,6 +501,12 @@
     },
     "symfony/security-http": {
         "version": "v5.2.10"
+    },
+    "symfony/serializer": {
+        "version": "v5.3.2"
+    },
+    "symfony/serializer-pack": {
+        "version": "v1.0.4"
     },
     "symfony/service-contracts": {
         "version": "v2.4.0"
