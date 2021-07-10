@@ -4,9 +4,10 @@ namespace App\Service;
 
 use App\Factory\BrowsershotFactory;
 use App\Model\Screenshot;
+use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Spatie\Browsershot\Exceptions\CouldNotTakeBrowsershot;
-use Symfony\Component\Cache\Adapter\FilesystemAdapter;
+use Symfony\Component\Cache\Adapter\PdoAdapter;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Contracts\Cache\ItemInterface;
 
@@ -15,12 +16,14 @@ class ScreenshotManager
     private $parameterBag;
     private $browsershotFactory;
     private $logger;
+    private $em;
 
-    public function __construct(ParameterBagInterface $parameterBag, BrowsershotFactory $browsershotFactory, LoggerInterface $screenshotLogger)
+    public function __construct(ParameterBagInterface $parameterBag, BrowsershotFactory $browsershotFactory, LoggerInterface $screenshotLogger, EntityManagerInterface $em)
     {
         $this->parameterBag = $parameterBag;
         $this->browsershotFactory = $browsershotFactory;
         $this->logger = $screenshotLogger;
+        $this->em = $em;
     }
 
     /**
@@ -33,9 +36,7 @@ class ScreenshotManager
 
         $filename = $this->getFilename($url, $parameters);
 
-        // https://symfony.com/doc/current/components/cache/adapters/pdo_doctrine_dbal_adapter.html#pdo-doctrine-adapter
-        $cache = new FilesystemAdapter();
-        // $cache  = new PdoAdapter()
+        $cache  = new PdoAdapter($this->em->getConnection());
 
         $logger = $this->logger;
 
