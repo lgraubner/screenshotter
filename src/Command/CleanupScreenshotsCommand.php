@@ -4,7 +4,6 @@ namespace App\Command;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
@@ -13,10 +12,8 @@ use Symfony\Component\Finder\Finder;
 
 class CleanupScreenshotsCommand extends Command
 {
-    protected static $defaultName = 'app:cleanup-screenshots';
-    protected static $defaultDescription = 'Cleans screenshot folder removing files older than specified day threshold.';
-
-    public const DEFAULT_DAYS = 30;
+    protected static $defaultName = 'app:screenshot:cleanup';
+    protected static $defaultDescription = 'Removes expired screenshots.';
 
     /**
      * @var ParameterBagInterface
@@ -34,7 +31,6 @@ class CleanupScreenshotsCommand extends Command
     {
         $this
             ->setDescription(self::$defaultDescription)
-            ->addOption('days', 'd', InputOption::VALUE_OPTIONAL, 'Threshold of days to keep screenshots in days', self::DEFAULT_DAYS)
         ;
     }
 
@@ -42,13 +38,13 @@ class CleanupScreenshotsCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
 
-        $days = $input->getOption('days');
+        $cacheDuration = $this->parameterBag->get('cache_duration');
         $screenshotDir = $this->parameterBag->get('screenshot_dir');
 
-        $threshold = strtotime(sprintf('-%d days', $days));
+        $threshold = strtotime(sprintf('-%s minutes', $cacheDuration));
 
         $finder = new Finder();
-        $finder->files()->in($screenshotDir)->date(sprintf('<= %s', date('Y-m-d', $threshold)));
+        $finder->files()->in($screenshotDir)->date(sprintf('<= %s', date('Y-m-d H:i:s', $threshold)));
 
         $count = $finder->count();
 

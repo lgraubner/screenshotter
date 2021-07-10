@@ -7,10 +7,12 @@ class Screenshot
     private $url;
     private $filename;
     private $path;
+    private $parameters;
 
-    public function __construct(string $url)
+    public function __construct(string $url, $parameters = [])
     {
         $this->url = $url;
+        $this->parameters = $parameters;
     }
 
     /**
@@ -59,5 +61,21 @@ class Screenshot
     public function setPath($path): void
     {
         $this->path = $path;
+    }
+
+   /**
+     * @return array
+     */
+    public function getParameters(): array
+    {
+        return $this->parameters;
+    }
+
+    /**
+     * @param array $parameters
+     */
+    public function setParameters($parameters): void
+    {
+        $this->parameters = $parameters;
     }
 }

@@ -5,6 +5,16 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     screenshot_dir: '%kernel.project_dir%/public/screenshots'
+    chrome_binary_path: '%env(string:CHROME_BINARY_PATH)%'
+    no_sandbox: '%env(not:PUPPETEER_SANDBOX)%'
+    cache_duration: '%env(int:SCREENSHOT_CACHE_DURATION)%'
+
+    defaults:
+        quality: 70
+        width: 1280
+        height: 800
+        fullPage: false
+        delay: 0
 
 services:
     # default configuration for services in *this* file

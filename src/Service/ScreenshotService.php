@@ -6,8 +6,9 @@ use App\Factory\BrowsershotFactory;
 use App\Model\Screenshot;
 use Psr\Log\LoggerInterface;
 use Spatie\Browsershot\Exceptions\CouldNotTakeBrowsershot;
+use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
-use Symfony\Component\Finder\Finder;
+use Symfony\Contracts\Cache\ItemInterface;
 
 class ScreenshotService
 {
@@ -27,34 +28,47 @@ class ScreenshotService
      * @return Screenshot
      * @throws CouldNotTakeBrowsershot
      */
-    public function execute(string $url): Screenshot
+    public function execute(string $url, $parameters = []): Screenshot
     {
-        // @TODO: take options into account for filename?
-        $filename = sprintf('%s.jpg', hash('sha256', $url));
         $screenshotDir = $this->parameterBag->get('screenshot_dir');
+        $cacheDuration = $this->parameterBag->get('cache_duration');
 
-        $finder = new Finder();
+        $filename = $this->getFilename($url, $parameters);
 
-        $path = sprintf('%s/%s', $screenshotDir, $filename);
+        // https://symfony.com/doc/current/components/cache/adapters/pdo_doctrine_dbal_adapter.html#pdo-doctrine-adapter
+        $cache = new FilesystemAdapter();
+        // $cache  = new PdoAdapter()
 
-        // @TODO: fill with options
-        $screenshot = new Screenshot($url);
-        $screenshot->setPath($path);
-        $screenshot->setFileName($filename);
+        $logger = $this->logger;
 
-        $cacheTime = strtotime('-30 minutes');
+        $screenshot = $cache->get($filename, function (ItemInterface $item) use ($cacheDuration, $url, $screenshotDir, $filename, $parameters, $logger) {
+            $item->expiresAfter($cacheDuration);
 
-        $finder->files()->in($screenshotDir)->name($filename)->date(sprintf('>= %s', date('Y-m-d', $cacheTime)));
+            $path = sprintf('%s/%s', $screenshotDir, $filename);
 
-        if (!$finder->hasResults()) {
-            // @TODO: pass in options from config
-            $browsershot = $this->browsershotFactory->create($url);
+            $screenshot = new Screenshot($url, $parameters);
+            $screenshot->setFilename($filename);
+            $screenshot->setPath($path);
+
+            $browsershot = $this->browsershotFactory->create($url, $parameters);
 
             $browsershot->save($path);
 
-            $this->logger->info(sprintf('Screenshot for %s created at %s.', $url, $path));
-        }
+            $logger->info(sprintf('Screenshot for %s created at %s.', $url, $path));
+
+            return $screenshot;
+        });
 
         return $screenshot;
+    }
+
+    private function getFilename(string $url, array $parameters, $ext = 'jpg'): string
+    {
+        // sort to make sure only one screenshot per parameter combination is created
+        ksort($parameters);
+
+        $filenameData = sprintf('%s_%s', $url, json_encode($parameters));
+
+        return sprintf('%s.%s', hash('sha256', $filenameData), $ext);
     }
 }
