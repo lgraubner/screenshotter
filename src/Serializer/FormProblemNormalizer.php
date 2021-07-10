@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Serializer;
 
 use App\Exception\InvalidFormException;

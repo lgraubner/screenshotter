@@ -32,8 +32,8 @@ class ScreenshotType extends AbstractType
                 'constraints' => [
                     new NotBlank(),
                     new Type([
-                        'value' => 'bool'
-                    ])
+                        'value' => 'bool',
+                    ]),
                 ],
             ])
             ->add('quality', NumberType::class, [

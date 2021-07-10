@@ -24,8 +24,6 @@ class ScreenshotService
     }
 
     /**
-     * @param string $url
-     * @return Screenshot
      * @throws CouldNotTakeBrowsershot
      */
     public function execute(string $url, $parameters = []): Screenshot

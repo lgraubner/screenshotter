@@ -15,17 +15,11 @@ class Screenshot
         $this->parameters = $parameters;
     }
 
-    /**
-     * @return string
-     */
     public function getUrl(): string
     {
         return $this->url;
     }
 
-    /**
-     * @param string $url
-     */
     public function setUrl(string $url): void
     {
         $this->url = $url;
@@ -63,9 +57,6 @@ class Screenshot
         $this->path = $path;
     }
 
-   /**
-     * @return array
-     */
     public function getParameters(): array
     {
         return $this->parameters;
