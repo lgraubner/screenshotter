@@ -5,8 +5,8 @@ namespace App\Controller\Api;
 use App\Exception\InvalidFormException;
 use App\Form\ScreenshotType;
 use App\Model\Screenshot;
-use App\Service\ArrayUtilsService;
-use App\Service\ScreenshotService;
+use App\Service\ArrayUtils;
+use App\Service\ScreenshotManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\HeaderUtils;
@@ -26,11 +26,11 @@ class ScreenshotController extends AbstractController
         $form = $this->createForm(ScreenshotType::class);
         $form->submit($data);
 
-        $parameters = $this->get(ArrayUtilsService::class)->pick(['delay', 'quality', 'fullPage', 'width', 'height']);
+        $parameters = $this->get(ArrayUtils::class)->pick(['delay', 'quality', 'fullPage', 'width', 'height']);
 
         if ($form->isSubmitted() && $form->isValid()) {
             /** @var Screenshot $screenshot */
-            $screenshot = $this->get(ScreenshotService::class)->execute($data['url'], $parameters);
+            $screenshot = $this->get(ScreenshotManager::class)->execute($data['url'], $parameters);
 
             $response = new BinaryFileResponse($screenshot->getPath());
 
@@ -50,8 +50,8 @@ class ScreenshotController extends AbstractController
     public static function getSubscribedServices(): array
     {
         return array_merge(parent::getSubscribedServices(), [
-            ScreenshotService::class,
-            ArrayUtilsService::class,
+            ScreenshotManager::class,
+            ArrayUtils::class,
         ]);
     }
 }

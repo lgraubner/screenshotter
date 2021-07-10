@@ -4,7 +4,6 @@ API for creating Screenshots of a website.
 
 ## Todo
 
-- Improve options + Screenshot Model handling
 - Tests
     - fix tests in docker
     - check deprecation messages

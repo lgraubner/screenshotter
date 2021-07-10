@@ -4,7 +4,7 @@ namespace App\Tests\Service;
 
 use PHPUnit\Framework\TestCase;
 
-class ArrayUtilsServiceTest extends TestCase
+class ArrayUtilsTest extends TestCase
 {
     public function testPick(): void
     {

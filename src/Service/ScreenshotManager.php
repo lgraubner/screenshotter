@@ -10,7 +10,7 @@ use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Contracts\Cache\ItemInterface;
 
-class ScreenshotService
+class ScreenshotManager
 {
     private $parameterBag;
     private $browsershotFactory;

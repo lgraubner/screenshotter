@@ -4,12 +4,12 @@ namespace App\Tests\Service;
 
 use App\Factory\BrowsershotFactory;
 use App\Model\Screenshot;
-use App\Service\ScreenshotService;
+use App\Service\ScreenshotManager;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
-class ScreenshotServiceTest extends TestCase
+class ScreenshotManagerTest extends TestCase
 {
     public function testExecuteScreenshot(): void
     {
@@ -25,11 +25,11 @@ class ScreenshotServiceTest extends TestCase
         $logger->expects($this->once())->method('info')
             ->with($this->anything());
 
-        $screenshotService = new ScreenshotService($parameterBag, $browsershotFactory, $logger);
+        $ScreenshotManager = new ScreenshotManager($parameterBag, $browsershotFactory, $logger);
 
         $url = 'https://google.com';
 
-        $screenshot = $screenshotService->execute($url);
+        $screenshot = $ScreenshotManager->execute($url);
 
         $this->assertInstanceOf(Screenshot::class, $screenshot);
     }

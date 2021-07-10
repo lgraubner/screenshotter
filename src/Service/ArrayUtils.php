@@ -2,7 +2,7 @@
 
 namespace App\Service;
 
-class ArrayUtilsService
+class ArrayUtils
 {
     public function pick(array $arr, array $allowed): array
     {
