@@ -19,8 +19,6 @@ services:
         volumes:
             - .:/var/www/symfony/:cached
             - /var/www/symfony/vendor
-        depends_on:
-            - db
 
     adminer:
         image: adminer:latest

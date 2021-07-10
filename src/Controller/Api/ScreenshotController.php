@@ -26,7 +26,7 @@ class ScreenshotController extends AbstractController
         $form = $this->createForm(ScreenshotType::class);
         $form->submit($data);
 
-        $parameters = $this->get(ArrayUtils::class)->pick(['delay', 'quality', 'fullPage', 'width', 'height']);
+        $parameters = $this->get(ArrayUtils::class)->pick($data, ['delay', 'quality', 'fullPage', 'width', 'height']);
 
         if ($form->isSubmitted() && $form->isValid()) {
             /** @var Screenshot $screenshot */

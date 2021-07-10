@@ -21,25 +21,20 @@ class ScreenshotType extends AbstractType
     {
         $builder
             ->add('url', TextType::class, [
-                'required' => true,
                 'constraints' => [
                     new NotBlank(),
                     new Url(),
                 ],
             ])
             ->add('fullPage', CheckboxType::class, [
-                'required' => false,
                 'constraints' => [
-                    new NotBlank(),
                     new Type([
                         'value' => 'bool',
                     ]),
                 ],
             ])
             ->add('quality', NumberType::class, [
-                'required' => false,
                 'constraints' => [
-                    new NotBlank(),
                     new PositiveOrZero(),
                     new LessThanOrEqual([
                         'value' => 100,
@@ -47,9 +42,7 @@ class ScreenshotType extends AbstractType
                 ],
             ])
             ->add('delay', NumberType::class, [
-                'required' => false,
                 'constraints' => [
-                    new NotBlank(),
                     new Positive(),
                     new LessThanOrEqual([
                         'value' => 10000, // 10 seconds
@@ -57,9 +50,7 @@ class ScreenshotType extends AbstractType
                 ],
             ])
             ->add('width', NumberType::class, [
-                'required' => false,
                 'constraints' => [
-                    new NotBlank(),
                     new Positive(),
                     new LessThanOrEqual([
                         'value' => 2000,
@@ -67,9 +58,7 @@ class ScreenshotType extends AbstractType
                 ],
             ])
             ->add('height', NumberType::class, [
-                'required' => false,
                 'constraints' => [
-                    new NotBlank(),
                     new Positive(),
                     new LessThanOrEqual([
                         'value' => 2000,
