@@ -4,7 +4,7 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
-    screenshot_dir: '%kernel.project_dir%/public/screenshots'
+    screenshot_dir: '%kernel.project_dir%/var/screenshots'
     chrome_binary_path: '%env(string:CHROME_BINARY_PATH)%'
     no_sandbox: '%env(not:PUPPETEER_SANDBOX)%'
     cache_duration: '%env(int:SCREENSHOT_CACHE_DURATION)%'

@@ -12,7 +12,7 @@ use Symfony\Component\Finder\Finder;
 
 class CleanupScreenshotsCommand extends Command
 {
-    protected static $defaultName = 'app:screenshot:cleanup';
+    protected static $defaultName = 'app:cleanup-screenshots';
     protected static $defaultDescription = 'Removes expired screenshots.';
 
     /**

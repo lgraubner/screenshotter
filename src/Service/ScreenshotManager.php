@@ -40,6 +40,7 @@ class ScreenshotManager
 
         $logger = $this->logger;
 
+        // @TODO: what happens, if cache is expired, but screenshot file with filename exists?
         $screenshot = $cache->get($filename, function (ItemInterface $item) use ($cacheDuration, $url, $screenshotDir, $filename, $parameters, $logger) {
             $item->expiresAfter($cacheDuration);
 

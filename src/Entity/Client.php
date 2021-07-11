@@ -2,15 +2,15 @@
 
 namespace App\Entity;
 
-use App\Repository\UserRepository;
+use App\Repository\ClientRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
- * @ORM\Entity(repositoryClass=UserRepository::class)
- * @ORM\Table(name="`user`")
+ * @ORM\Entity(repositoryClass=ClientRepository::class)
  */
-class User implements UserInterface
+class Client implements UserInterface
 {
     /**
      * @ORM\Id
@@ -22,32 +22,43 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="string", length=180, unique=true)
      */
-    private $apiToken;
+    private $apiKey;
+
+    /**
+     * @ORM\Column(type="string", length=180)
+     */
+    private $email;
 
     /**
      * @ORM\Column(type="json")
      */
     private $roles = [];
 
-    /**
-     * @var string The hashed password
-     * @ORM\Column(type="string")
-     */
-    private $password;
-
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getApiToken(): ?string
+    public function getApiKey(): ?string
     {
-        return $this->apiToken;
+        return $this->apiKey;
     }
 
-    public function setApiToken(string $apiToken): self
+    public function setApiKey(string $apiKey): self
     {
-        $this->apiToken = $apiToken;
+        $this->apiKey = $apiKey;
+
+        return $this;
+    }
+
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(string $email): self
+    {
+        $this->email = $email;
 
         return $this;
     }
@@ -57,9 +68,17 @@ class User implements UserInterface
      *
      * @see UserInterface
      */
+    public function getUserIdentifier(): string
+    {
+        return (string) $this->email;
+    }
+
+    /**
+     * @deprecated since Symfony 5.3, use getUserIdentifier instead
+     */
     public function getUsername(): string
     {
-        return (string) $this->apiToken;
+        return (string) $this->email;
     }
 
     /**
@@ -82,23 +101,17 @@ class User implements UserInterface
     }
 
     /**
-     * @see UserInterface
+     * This method can be removed in Symfony 6.0 - is not needed for apps that do not check user passwords.
+     *
+     * @see PasswordAuthenticatedUserInterface
      */
-    public function getPassword(): string
+    public function getPassword(): ?string
     {
-        return $this->password;
-    }
-
-    public function setPassword(string $password): self
-    {
-        $this->password = $password;
-
-        return $this;
+        return null;
     }
 
     /**
-     * Returning a salt is only needed, if you are not using a modern
-     * hashing algorithm (e.g. bcrypt or sodium) in your security.yaml.
+     * This method can be removed in Symfony 6.0 - is not needed for apps that do not check user passwords.
      *
      * @see UserInterface
      */

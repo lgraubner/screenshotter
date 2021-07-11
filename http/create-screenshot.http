@@ -1,7 +1,9 @@
 POST http://localhost:8080/api/v1/screenshot
 Accept: application/json
 Content-Type: application/json
+Authorization: Bearer 8c93ab5f0fa54f1a678add2564dc5109c796bf8662448ae9ce7d9f1ef97b2fdd
 
 {
-    "url": "https://google.com"
+    "url": "https://larsgraubner.com",
+    "delay": 12
 }
