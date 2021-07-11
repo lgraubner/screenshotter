@@ -36,7 +36,7 @@ class ScreenshotManager
 
         $filename = $this->getFilename($url, $parameters);
 
-        $cache  = new PdoAdapter($this->em->getConnection());
+        $cache = new PdoAdapter($this->em->getConnection());
 
         $logger = $this->logger;
 

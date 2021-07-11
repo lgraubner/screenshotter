@@ -8,9 +8,9 @@ API for creating Screenshots of a website.
     - add missing tests
     - fix tests in docker
     - check deprecation messages
-- Deploy
-- fix dying browsershot instances (see logs)
+- Deploy + terraform
 - sentry, uptimerobot
+- fix dying browsershot instances (see logs)
 - docs
 
 ## Commands
