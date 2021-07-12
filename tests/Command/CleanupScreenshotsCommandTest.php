@@ -15,14 +15,11 @@ class CleanupScreenshotsCommandTest extends KernelTestCase
 
         $command = $application->find('app:cleanup-screenshots');
         $commandTester = new CommandTester($command);
-        $commandTester->execute([], [
-            'days' => 100,
-        ]);
+        $commandTester->execute([]);
 
         $output = $commandTester->getDisplay();
         $this->assertStringContainsString('Screenshot folder successfully cleaned', $output);
 
-        // @TODO: mock?
         $this->markTestIncomplete();
     }
 }

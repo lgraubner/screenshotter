@@ -16,6 +16,12 @@ API for creating Screenshots of a website.
 ## Commands
 
 ```
+# apply code formatting
+composer php-cs-fixer
+
+# run tests
+composer test
+
 # remove expired screenshots, should be called via cron regularily
 bin/console app:cleanup-screenshots
 
