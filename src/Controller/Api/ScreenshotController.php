@@ -16,6 +16,15 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ScreenshotController extends AbstractController
 {
+    private ScreenshotManager $screenshotManager;
+    private ArrayUtils $arrayUtils;
+
+    public function __construct(ScreenshotManager $screenshotManager, ArrayUtils $arrayUtils)
+    {
+        $this->screenshotManager = $screenshotManager;
+        $this->arrayUtils = $arrayUtils;
+    }
+
     /**
      * @Route("/screenshot", name="app_screenshot", methods={"POST", "GET"})
      */
@@ -26,11 +35,11 @@ class ScreenshotController extends AbstractController
         $form = $this->createForm(ScreenshotType::class);
         $form->submit($data);
 
-        $parameters = $this->get(ArrayUtils::class)->pick($data, ['delay', 'quality', 'fullPage', 'width', 'height']);
+        $parameters = $this->arrayUtils->pick($data, ['delay', 'quality', 'fullPage', 'width', 'height']);
 
         if ($form->isSubmitted() && $form->isValid()) {
             /** @var Screenshot $screenshot */
-            $screenshot = $this->get(ScreenshotManager::class)->execute($data['url'], $parameters);
+            $screenshot = $this->screenshotManager->execute($data['url'], $parameters);
 
             $response = new BinaryFileResponse($screenshot->getPath());
 
@@ -45,13 +54,5 @@ class ScreenshotController extends AbstractController
         }
 
         throw new InvalidFormException($form, 'Invalid data');
-    }
-
-    public static function getSubscribedServices(): array
-    {
-        return array_merge(parent::getSubscribedServices(), [
-            ScreenshotManager::class,
-            ArrayUtils::class,
-        ]);
     }
 }
