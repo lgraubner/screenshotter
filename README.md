@@ -27,4 +27,7 @@ bin/console app:cleanup-screenshots
 
 # create a new client to use the api
 bin/console app:create-client
+
+# create test db schema
+php bin/console doctrine:schema:create --env=test
 ```
