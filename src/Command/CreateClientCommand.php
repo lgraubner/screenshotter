@@ -2,25 +2,23 @@
 
 namespace App\Command;
 
-use App\Entity\Client;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Service\ClientService;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use Symfony\Component\Uid\Uuid;
 
 class CreateClientCommand extends Command
 {
     protected static $defaultName = 'app:create-client';
     protected static $defaultDescription = 'Creates a new api client.';
 
-    private $em;
+    private ClientService $clientService;
 
-    public function __construct(EntityManagerInterface $em)
+    public function __construct(ClientService $clientService)
     {
-        $this->em = $em;
+        $this->clientService = $clientService;
 
         parent::__construct();
     }
@@ -37,14 +35,7 @@ class CreateClientCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
 
-        $client = new Client();
-        $client->setEmail($input->getOption('email'));
-
-        $uuid = Uuid::v4();
-        $client->setApiKey(hash('sha256', $uuid));
-
-        $this->em->persist($client);
-        $this->em->flush();
+        $client = $this->clientService->create($input->getOption('email'));
 
         $io->success(sprintf('Created client with email %s and api key "%s".', $client->getEmail(), $client->getApiKey()));
 

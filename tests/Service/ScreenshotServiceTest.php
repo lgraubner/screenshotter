@@ -4,14 +4,14 @@ namespace App\Tests\Service;
 
 use App\Factory\BrowsershotFactory;
 use App\Model\Screenshot;
-use App\Service\ScreenshotManager;
+use App\Service\ScreenshotService;
 use Doctrine\ORM\EntityManagerInterface;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 use Spatie\Browsershot\Browsershot;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
-class ScreenshotManagerTest extends TestCase
+class ScreenshotServiceTest extends TestCase
 {
     public function testExecuteScreenshot(): void
     {
@@ -39,14 +39,14 @@ class ScreenshotManagerTest extends TestCase
         // mock return of dsn
         $em->method('getConnection')->willReturn('');
 
-        $screenshotManager = new ScreenshotManager($parameterBag, $browsershotFactory, $logger, $em);
+        $ScreenshotService = new ScreenshotService($parameterBag, $browsershotFactory, $logger, $em);
 
         $url = 'https://google.com';
         $parameters = [
             'fullPage' => true,
         ];
 
-        $screenshot = $screenshotManager->execute($url, $parameters);
+        $screenshot = $ScreenshotService->execute($url, $parameters);
 
         $this->assertInstanceOf(Screenshot::class, $screenshot);
         $this->assertEquals($screenshot->getUrl(), $url);
@@ -76,16 +76,16 @@ class ScreenshotManagerTest extends TestCase
         // mock return of dsn
         $em->method('getConnection')->willReturn('');
 
-        $screenshotManager = new ScreenshotManager($parameterBag, $browsershotFactory, $logger, $em);
+        $ScreenshotService = new ScreenshotService($parameterBag, $browsershotFactory, $logger, $em);
 
         $url = 'https://google.com';
 
-        $screenshot1 = $screenshotManager->execute($url, [
+        $screenshot1 = $ScreenshotService->execute($url, [
             'width' => 1111,
             'height' => 777,
         ]);
 
-        $screenshot2 = $screenshotManager->execute($url, [
+        $screenshot2 = $ScreenshotService->execute($url, [
             'height' => 777,
             'width' => 1111,
         ]);

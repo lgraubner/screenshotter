@@ -6,7 +6,7 @@ use App\Exception\InvalidFormException;
 use App\Form\ScreenshotType;
 use App\Model\Screenshot;
 use App\Service\ArrayUtils;
-use App\Service\ScreenshotManager;
+use App\Service\ScreenshotService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\HeaderUtils;
@@ -16,12 +16,12 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ScreenshotController extends AbstractController
 {
-    private ScreenshotManager $screenshotManager;
+    private ScreenshotService $ScreenshotService;
     private ArrayUtils $arrayUtils;
 
-    public function __construct(ScreenshotManager $screenshotManager, ArrayUtils $arrayUtils)
+    public function __construct(ScreenshotService $ScreenshotService, ArrayUtils $arrayUtils)
     {
-        $this->screenshotManager = $screenshotManager;
+        $this->ScreenshotService = $ScreenshotService;
         $this->arrayUtils = $arrayUtils;
     }
 
@@ -39,7 +39,7 @@ class ScreenshotController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             /** @var Screenshot $screenshot */
-            $screenshot = $this->screenshotManager->execute($data['url'], $parameters);
+            $screenshot = $this->ScreenshotService->execute($data['url'], $parameters);
 
             $response = new BinaryFileResponse($screenshot->getPath());
 

@@ -2,6 +2,7 @@
 
 namespace App\Tests\Controller\Api;
 
+use App\Entity\Client;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class ScreenshotControllerTest extends WebTestCase
@@ -16,14 +17,12 @@ class ScreenshotControllerTest extends WebTestCase
 
     public function testInvalidPayload(): void
     {
-        // @TODO: test db, fixture
-        // @TODO: authorization required
-        $this->markTestIncomplete();
         $client = static::createClient();
-        $client->request('GET', '/api/v1/screenshot', [
-            'headers' => [
-                'Authorization' => 'Bearer XXX'
-            ]
+
+        $appClients = self::getContainer()->get('doctrine')->getRepository(Client::class)->findAll();
+
+        $client->request('GET', '/api/v1/screenshot', [], [], [
+            'HTTP_AUTHORIZATION' => sprintf('Bearer %s', $appClients[0]->getApiKey()),
         ]);
 
         $this->assertResponseStatusCodeSame(400);
@@ -31,10 +30,14 @@ class ScreenshotControllerTest extends WebTestCase
 
     public function testCreatesScreenshot(): void
     {
-        $this->markTestIncomplete();
+        // @TODO: fix docker problem
         $client = static::createClient();
-        // @TODO: use json request
-        $client->request('GET', '/api/v1/screenshot?url=https://google.com');
+
+        $appClients = self::getContainer()->get('doctrine')->getRepository(Client::class)->findAll();
+
+        $client->request('GET', '/api/v1/screenshot?url=https://heise.de', [], [], [
+            'HTTP_AUTHORIZATION' => sprintf('Bearer %s', $appClients[0]->getApiKey()),
+        ]);
 
         $this->assertResponseIsSuccessful();
     }

@@ -11,7 +11,7 @@ use Symfony\Component\Cache\Adapter\PdoAdapter;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Contracts\Cache\ItemInterface;
 
-class ScreenshotManager
+class ScreenshotService
 {
     private $parameterBag;
     private $browsershotFactory;

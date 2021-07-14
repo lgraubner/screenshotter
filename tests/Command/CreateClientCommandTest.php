@@ -24,6 +24,7 @@ class CreateClientCommandTest extends KernelTestCase
     public function testCreatesClient(): void
     {
         $this->markTestIncomplete();
+        // @TODO: mock em
 
         $kernel = static::createKernel();
         $application = new Application($kernel);

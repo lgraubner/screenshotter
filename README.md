@@ -7,7 +7,7 @@ API for creating Screenshots of a website.
 - Tests
     - add missing tests
     - fix tests in docker
-    - check deprecation messages
+    - fixtures
 - Deploy + terraform
 - sentry, uptimerobot
 - fix dying browsershot instances (see logs)
@@ -30,4 +30,7 @@ bin/console app:create-client
 
 # create test db schema
 php bin/console doctrine:schema:create --env=test
+
+# load fixtures
+php bin/console doctrine:fixtures:load --env=test
 ```
