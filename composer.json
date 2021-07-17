@@ -13,7 +13,6 @@
         "doctrine/doctrine-migrations-bundle": "^3.1",
         "doctrine/orm": "^2.8",
         "phpdocumentor/reflection-docblock": "^5.2",
-        "phpunit/phpunit": "^9.5",
         "sensio/framework-extra-bundle": "^6.1",
         "sentry/sentry-symfony": "^4.1",
         "spatie/browsershot": "^3.46",
@@ -89,6 +88,7 @@
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "^3.4",
         "friendsofphp/php-cs-fixer": "^3.0",
+        "phpunit/phpunit": "^9.5",
         "symfony/maker-bundle": "^1.31"
     }
 }

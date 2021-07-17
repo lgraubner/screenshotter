@@ -17,7 +17,7 @@ class ClientFixture extends Fixture
         $client->setEmail('yummy@pizza.land');
 
         $uuid = Uuid::v4();
-        $client->setApiKey(hash('sha256', $uuid));
+        $client->setApiKey(hash('sha256', (string) $uuid));
 
         $manager->persist($client);
 

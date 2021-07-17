@@ -23,7 +23,7 @@ class ClientService
         $client->setEmail($email);
 
         $uuid = Uuid::v4();
-        $client->setApiKey(hash('sha256', $uuid));
+        $client->setApiKey(hash('sha256', (string) $uuid));
 
         $this->em->persist($client);
         $this->em->flush();
