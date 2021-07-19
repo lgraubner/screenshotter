@@ -32,8 +32,6 @@ class ScreenshotControllerTest extends WebTestCase
 
     public function testCreatesScreenshot(): void
     {
-        // @TODO: fix docker problem
-        $this->markTestIncomplete();
         $client = static::createClient();
 
         $appClients = self::getContainer()->get('doctrine')->getRepository(Client::class)->findAll();

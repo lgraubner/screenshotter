@@ -74,7 +74,7 @@
             "@auto-scripts"
         ],
         "php-cs-fixer": "vendor/bin/php-cs-fixer fix --verbose",
-        "test": "vendor/bin/phpunit"
+        "test": "APP_ENV=test vendor/bin/phpunit"
     },
     "conflict": {
         "symfony/symfony": "*"

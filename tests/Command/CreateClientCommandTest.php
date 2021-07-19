@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Tests\Command;
 
+use App\Command\CreateClientCommand;
+use App\Service\ClientService;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Console\Tester\CommandTester;
@@ -25,13 +27,13 @@ class CreateClientCommandTest extends KernelTestCase
 
     public function testCreatesClient(): void
     {
-        $this->markTestIncomplete();
         // @TODO: mock em
 
-        $kernel = static::createKernel();
-        $application = new Application($kernel);
+        static::createKernel();
 
-        $command = $application->find('app:create-client');
+        $clientService = $this->createMock(ClientService::class);
+
+        $command = new CreateClientCommand($clientService);
         $commandTester = new CommandTester($command);
         $commandTester->execute([], ['email' => 'foo@bar.de']);
 

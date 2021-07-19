@@ -4,10 +4,7 @@ API for creating Screenshots of a website.
 
 ## Todo
 
-- Tests
-    - add missing tests
-    - fix tests in docker
-    - fixtures
+- Test create client command
 - Deploy + terraform
 - sentry, uptimerobot
 - fix dying browsershot instances (see logs)

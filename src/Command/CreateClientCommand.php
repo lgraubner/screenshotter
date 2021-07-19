@@ -7,8 +7,8 @@ namespace App\Command;
 use App\Service\ClientService;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 class CreateClientCommand extends Command
@@ -29,7 +29,6 @@ class CreateClientCommand extends Command
     {
         $this
             ->setDescription(self::$defaultDescription)
-            ->addOption('email', null, InputOption::VALUE_REQUIRED, 'Contact email')
         ;
     }
 
@@ -37,7 +36,21 @@ class CreateClientCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
 
-        $client = $this->clientService->create($input->getOption('email'));
+        $helper = $this->getHelper('question');
+
+        $question = new Question('Client\'s email address: ');
+        $question->setValidator(function ($answer) {
+            if (null === $answer || !preg_match('/.+@.+/', $answer)) {
+                throw new \RuntimeException('Invalid email');
+            }
+
+            return $answer;
+        });
+        $question->setMaxAttempts(3);
+
+        $email = $helper->ask($input, $output, $question);
+
+        $client = $this->clientService->create($email);
 
         $io->success(sprintf('Created client with email %s and api key "%s".', $client->getEmail(), $client->getApiKey()));
 
