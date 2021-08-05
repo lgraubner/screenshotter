@@ -12,19 +12,30 @@ use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 class FormProblemNormalizer implements NormalizerInterface, CacheableSupportsMethodInterface
 {
-    private $debug;
-    private $defaultContext = [
+    private bool $debug;
+    /**
+     * @var array<string, string> $defaultContext
+     */
+    private array $defaultContext = [
         'type' => 'https://tools.ietf.org/html/rfc2616#section-10',
         'title' => 'An error occurred',
     ];
 
+    /**
+     * @param array<string, string> $defaultContext
+     */
     public function __construct(bool $debug = false, array $defaultContext = [])
     {
         $this->debug = $debug;
         $this->defaultContext = $defaultContext + $this->defaultContext;
     }
 
-    public function normalize($object, string $format = null, array $context = [])
+    /**
+     * @param array<string, mixed> $context
+     *
+     * @return array<string, mixed>
+     */
+    public function normalize(mixed $object, string $format = null, array $context = []): array
     {
         if (!$object instanceof FlattenException) {
             throw new InvalidArgumentException(sprintf('The object must implement "%s".', FlattenException::class));

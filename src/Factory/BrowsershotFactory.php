@@ -9,14 +9,17 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class BrowsershotFactory
 {
-    private $parameterBag;
+    private ParameterBagInterface $parameterBag;
 
     public function __construct(ParameterBagInterface $parameterBag)
     {
         $this->parameterBag = $parameterBag;
     }
 
-    public function create(string $url, $parameters = []): Browsershot
+    /**
+     * @param array<string, mixed> $parameters
+     */
+    public function create(string $url, array $parameters = []): Browsershot
     {
         $defaults = $this->parameterBag->get('defaults');
 

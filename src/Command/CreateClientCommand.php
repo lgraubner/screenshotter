@@ -28,7 +28,7 @@ class CreateClientCommand extends Command
     protected function configure(): void
     {
         $this
-            ->setDescription(self::$defaultDescription)
+            ->setDescription((string) self::$defaultDescription)
         ;
     }
 

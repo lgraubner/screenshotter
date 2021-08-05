@@ -8,6 +8,11 @@ class ArrayUtils
 {
     /**
      * Returns new array with items specified by allow list.
+     *
+     * @param array<string, mixed> $arr
+     * @param array<string> $allowed
+     *
+     * @return array<string, mixed>
      */
     public function pick(array $arr, array $allowed): array
     {

@@ -5,8 +5,10 @@ API for creating Screenshots of a website.
 ## Todo
 
 - Test create client command
-- Deploy + terraform
-- sentry, uptimerobot
+- Deploy
+    - deploy user
+    - don't persist cache between deploys
+- sentry
 - fix dying browsershot instances (see logs)
 - docs
 

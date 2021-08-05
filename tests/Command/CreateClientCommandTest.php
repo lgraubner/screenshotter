@@ -15,7 +15,7 @@ class CreateClientCommandTest extends KernelTestCase
 {
     public function testRequiresEmail(): void
     {
-        $this->expectError(TypeError::class);
+        $this->expectError();
 
         $kernel = static::createKernel();
         $application = new Application($kernel);

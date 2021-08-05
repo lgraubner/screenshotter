@@ -6,12 +6,19 @@ namespace App\Model;
 
 class Screenshot
 {
-    private $url;
-    private $filename;
-    private $path;
-    private $parameters;
+    private string $url;
+    private string $filename;
+    private string $path;
 
-    public function __construct(string $url, $parameters = [])
+    /**
+     * @var array<string, mixed> $parameters
+     */
+    private array $parameters;
+
+    /**
+     * @param array<string, mixed> $parameters
+     */
+    public function __construct(string $url, array $parameters = [])
     {
         $this->url = $url;
         $this->parameters = $parameters;
@@ -59,13 +66,16 @@ class Screenshot
         $this->path = $path;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function getParameters(): array
     {
         return $this->parameters;
     }
 
     /**
-     * @param array $parameters
+     * @param array<string, mixed> $parameters
      */
     public function setParameters($parameters): void
     {

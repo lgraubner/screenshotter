@@ -32,7 +32,7 @@ class CleanupScreenshotsCommand extends Command
     protected function configure(): void
     {
         $this
-            ->setDescription(self::$defaultDescription)
+            ->setDescription((string) self::$defaultDescription)
         ;
     }
 
@@ -46,7 +46,7 @@ class CleanupScreenshotsCommand extends Command
         $threshold = strtotime(sprintf('-%s minutes', $cacheDuration));
 
         $finder = new Finder();
-        $finder->files()->in($screenshotDir)->date(sprintf('<= %s', date('Y-m-d H:i:s', $threshold)));
+        $finder->files()->in($screenshotDir)->date(sprintf('<= %s', date('Y-m-d H:i:s', (int) $threshold)));
 
         $count = $finder->count();
 

@@ -73,7 +73,8 @@
         "post-update-cmd": [
             "@auto-scripts"
         ],
-        "php-cs-fixer": "vendor/bin/php-cs-fixer fix --verbose",
+        "stan": "vendor/bin/phpstan analyse",
+        "cs-fix": "vendor/bin/php-cs-fixer fix",
         "test": "APP_ENV=test vendor/bin/phpunit"
     },
     "conflict": {
@@ -88,6 +89,7 @@
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "^3.4",
         "friendsofphp/php-cs-fixer": "^3.0",
+        "phpstan/phpstan": "^0.12.94",
         "phpunit/phpunit": "^9.5",
         "symfony/maker-bundle": "^1.31"
     }

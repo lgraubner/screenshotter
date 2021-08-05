@@ -10,7 +10,7 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 class JsonRequestSubscriber implements EventSubscriberInterface
 {
-    public function onKernelRequest(RequestEvent $event)
+    public function onKernelRequest(RequestEvent $event): void
     {
         $request = $event->getRequest();
         $content = $request->getContent();
@@ -19,7 +19,7 @@ class JsonRequestSubscriber implements EventSubscriberInterface
             return;
         }
 
-        $data = json_decode($content, true);
+        $data = json_decode((string) $content, true);
 
         if (JSON_ERROR_NONE !== json_last_error()) {
             throw new BadRequestHttpException('Unable to parse request.');
@@ -28,7 +28,10 @@ class JsonRequestSubscriber implements EventSubscriberInterface
         $request->request->replace($data);
     }
 
-    public static function getSubscribedEvents()
+    /**
+     * @return array<string, string>
+     */
+    public static function getSubscribedEvents(): array
     {
         return [
             RequestEvent::class => 'onKernelRequest',

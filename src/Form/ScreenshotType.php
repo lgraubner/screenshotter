@@ -19,7 +19,11 @@ use Symfony\Component\Validator\Constraints\Url;
 
 class ScreenshotType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    /**
+     * @param FormBuilderInterface<mixed> $builder
+     * @param array<mixed> $options
+     */
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('url', TextType::class, [
@@ -70,7 +74,7 @@ class ScreenshotType extends AbstractType
         ;
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'csrf_protection' => false,

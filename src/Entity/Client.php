@@ -19,22 +19,23 @@ class Client implements UserInterface
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private int $id;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
      */
-    private $apiKey;
+    private string $apiKey;
 
     /**
      * @ORM\Column(type="string", length=180)
      */
-    private $email;
+    private string $email;
 
     /**
      * @ORM\Column(type="json")
+     * @var array<string>
      */
-    private $roles = [];
+    private array $roles = [];
 
     public function getId(): ?int
     {
@@ -95,6 +96,9 @@ class Client implements UserInterface
         return array_unique($roles);
     }
 
+    /**
+     * @param array<string> $roles
+     */
     public function setRoles(array $roles): self
     {
         $this->roles = $roles;
@@ -125,7 +129,7 @@ class Client implements UserInterface
     /**
      * @see UserInterface
      */
-    public function eraseCredentials()
+    public function eraseCredentials(): void
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;

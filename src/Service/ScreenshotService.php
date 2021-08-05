@@ -15,10 +15,10 @@ use Symfony\Contracts\Cache\ItemInterface;
 
 class ScreenshotService
 {
-    private $parameterBag;
-    private $browsershotFactory;
-    private $logger;
-    private $em;
+    private ParameterBagInterface $parameterBag;
+    private BrowsershotFactory $browsershotFactory;
+    private LoggerInterface $logger;
+    private EntityManagerInterface $em;
 
     public function __construct(ParameterBagInterface $parameterBag, BrowsershotFactory $browsershotFactory, LoggerInterface $screenshotLogger, EntityManagerInterface $em)
     {
@@ -30,8 +30,9 @@ class ScreenshotService
 
     /**
      * @throws CouldNotTakeBrowsershot
+     * @param array<string, string> $parameters
      */
-    public function execute(string $url, $parameters = []): Screenshot
+    public function execute(string $url, array $parameters = []): Screenshot
     {
         $screenshotDir = $this->parameterBag->get('screenshot_dir');
         $cacheDuration = $this->parameterBag->get('cache_duration');
@@ -64,7 +65,10 @@ class ScreenshotService
         return $screenshot;
     }
 
-    private function getFilename(string $url, array $parameters, $ext = 'jpg'): string
+    /**
+     * @param array<string, mixed> $parameters
+     */
+    private function getFilename(string $url, array $parameters, string $ext = 'jpg'): string
     {
         // sort to make sure only one screenshot per parameter combination is created
         ksort($parameters);
