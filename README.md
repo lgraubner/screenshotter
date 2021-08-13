@@ -6,6 +6,7 @@ API for creating Screenshots of a website.
 
 - Test create client command
 - Deploy
+    - set group
 - sentry
 - fix dying browsershot instances (see logs)
 - docs
