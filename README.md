@@ -7,7 +7,6 @@ API for creating Screenshots of a website.
 - Test create client command
 - Deploy
     - deploy user
-    - don't persist cache between deploys
 - sentry
 - fix dying browsershot instances (see logs)
 - docs
@@ -32,4 +31,11 @@ php bin/console doctrine:schema:create --env=test
 
 # load fixtures
 php bin/console doctrine:fixtures:load --env=test
+```
+
+## Deployment
+
+```
+# deploy
+dep deploy
 ```
