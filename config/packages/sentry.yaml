@@ -11,3 +11,4 @@ services:
                 ignore_exceptions:
                     - Symfony\Component\HttpKernel\Exception\NotFoundHttpException
                     - App\Exception\InvalidFormException
+                    - Symfony\Component\Security\Core\Exception\AccessDeniedException
