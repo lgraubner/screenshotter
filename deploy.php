@@ -2,6 +2,7 @@
 namespace Deployer;
 
 require 'recipe/symfony4.php';
+require 'recipe/npm.php';
 
 set('bin_dir', 'bin');
 set('var_dir', 'var');
@@ -38,6 +39,8 @@ task('build', function () {
 
 // [Optional] if deploy fails automatically unlock.
 after('deploy:failed', 'deploy:unlock');
+
+after('deploy:update_code', 'npm:install');
 
 // Migrate database before symlink new release.
 
