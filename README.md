@@ -5,7 +5,6 @@ API for creating Screenshots of a website.
 ## Todo
 
 - Test create client command
-- sentry
 - fix dying browsershot instances (see logs)
 - docs
 
