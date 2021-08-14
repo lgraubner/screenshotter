@@ -25,7 +25,6 @@ class BrowsershotFactory
 
         $options = array_merge($defaults, $parameters);
 
-        $chromeBinaryPath = $this->parameterBag->get('chrome_binary_path');
         $noSandbox = $this->parameterBag->get('no_sandbox');
 
         $browsershot = Browsershot::url($url)
@@ -34,9 +33,10 @@ class BrowsershotFactory
             ->dismissDialogs()
             ->waitUntilNetworkIdle();
 
-        if ($chromeBinaryPath) {
-            $browsershot->setChromePath($chromeBinaryPath);
-        }
+        // $this->parameterBag->get('chrome_binary_path')
+        //if ($chromeBinaryPath) {
+        //    $browsershot->setChromePath($chromeBinaryPath);
+        //}
 
         if (is_bool($noSandbox)) {
             $browsershot->noSandbox();
