@@ -2,7 +2,6 @@
 namespace Deployer;
 
 require 'recipe/symfony4.php';
-require 'recipe/npm.php';
 
 set('bin_dir', 'bin');
 set('var_dir', 'var');
@@ -35,6 +34,10 @@ host('168.119.227.77')
 
 task('build', function () {
     run('cd {{release_path}} && build');
+});
+
+task('npm:install', function () {
+    run('cd {{release_path}} && npm install');
 });
 
 // [Optional] if deploy fails automatically unlock.
