@@ -3,6 +3,8 @@ namespace Deployer;
 
 require 'recipe/symfony4.php';
 
+set('allow_anonymous_stats', false);
+
 set('bin_dir', 'bin');
 set('var_dir', 'var');
 
@@ -22,7 +24,7 @@ add('shared_dirs', ['var/screenshots']);
 
 // Writable dirs by web server
 add('writable_dirs', []);
-set('allow_anonymous_stats', false);
+set('writable_mode', 'chmod');
 
 // Hosts
 
