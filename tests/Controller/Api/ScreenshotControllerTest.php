@@ -12,7 +12,7 @@ class ScreenshotControllerTest extends WebTestCase
     public function testRequiresAuthorization(): void
     {
         $client = static::createClient();
-        $client->request('GET', '/api/v1/screenshot');
+        $client->request('POST', '/api/v1/screenshot');
 
         $this->assertResponseStatusCodeSame(401);
     }
@@ -23,7 +23,7 @@ class ScreenshotControllerTest extends WebTestCase
 
         $appClients = self::getContainer()->get('doctrine')->getRepository(Client::class)->findAll();
 
-        $client->request('GET', '/api/v1/screenshot', [], [], [
+        $client->request('POST', '/api/v1/screenshot', [], [], [
             'HTTP_AUTHORIZATION' => sprintf('Bearer %s', $appClients[0]->getApiKey()),
         ]);
 
@@ -36,8 +36,11 @@ class ScreenshotControllerTest extends WebTestCase
 
         $appClients = self::getContainer()->get('doctrine')->getRepository(Client::class)->findAll();
 
-        $client->request('GET', '/api/v1/screenshot?url=https://heise.de', [], [], [
+        $client->request('POST', '/api/v1/screenshot', [
+            'url' => 'https://heise.de',
+        ], [], [
             'HTTP_AUTHORIZATION' => sprintf('Bearer %s', $appClients[0]->getApiKey()),
+            'HTTP_ACCEPT' => 'application/json',
         ]);
 
         $this->assertResponseIsSuccessful();

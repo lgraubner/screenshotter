@@ -1,16 +1,34 @@
 # Screenshotter
 
-API for creating Screenshots of a website.
+Simple service based on [Symfony](https://symfony.com/) to create screenshots from websites.
 
-## Todo
+## Api
 
-- Test create client command
-- fix dying browsershot instances (see logs)
-- docs
+```
+POST http://localhost:8080/api/v1/screenshot
+content-type: application/json
+
+{
+    "url": "https://heise.de"
+}
+```
+
+### Options
+
+| Name     | Default | Description           |
+|----------|---------|-----------------------|
+| delay    | 0       | Delay after page load |
+| quality  | 70      | JPEG image quality    |
+| width    | 1280    | Browser window width  |
+| height   | 800     | Browser window height |
+| fullPage | false   | Full page screenshot  |
 
 ## Commands
 
 ```
+# run PHPStan
+composer stan
+
 # apply code formatting
 composer php-cs-fixer
 
@@ -33,6 +51,5 @@ php bin/console doctrine:fixtures:load --env=test
 ## Deployment
 
 ```
-# deploy
 dep deploy
 ```

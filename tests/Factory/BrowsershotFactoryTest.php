@@ -18,7 +18,6 @@ class BrowsershotFactoryTest extends TestCase
         $parameterBag->expects($this->exactly(3))->method('get')
             ->withConsecutive(
                 ['defaults'],
-                ['chrome_binary_path'],
                 ['no_sandbox'],
             )
             ->willReturnOnConsecutiveCalls([

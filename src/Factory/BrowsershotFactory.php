@@ -33,10 +33,11 @@ class BrowsershotFactory
             ->dismissDialogs()
             ->waitUntilNetworkIdle();
 
-        // $this->parameterBag->get('chrome_binary_path')
-        //if ($chromeBinaryPath) {
-        //    $browsershot->setChromePath($chromeBinaryPath);
-        //}
+        $chromeBinaryPath = $this->parameterBag->get('chrome_binary_path');
+
+        if ($chromeBinaryPath) {
+            $browsershot->setChromePath($chromeBinaryPath);
+        }
 
         if (is_bool($noSandbox)) {
             $browsershot->noSandbox();

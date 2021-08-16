@@ -28,11 +28,11 @@ class ScreenshotController extends AbstractController
     }
 
     /**
-     * @Route("/screenshot", name="app_screenshot", methods={"POST", "GET"})
+     * @Route("/screenshot", name="app_screenshot", methods={"POST"})
      */
     public function index(Request $request): Response
     {
-        $data = array_merge($request->request->all(), $request->query->all());
+        $data = $request->request->all();
 
         $form = $this->createForm(ScreenshotType::class);
         $form->submit($data);
