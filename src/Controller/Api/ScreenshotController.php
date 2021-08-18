@@ -18,12 +18,12 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ScreenshotController extends AbstractController
 {
-    private ScreenshotService $ScreenshotService;
+    private ScreenshotService $screenshotService;
     private ArrayUtils $arrayUtils;
 
-    public function __construct(ScreenshotService $ScreenshotService, ArrayUtils $arrayUtils)
+    public function __construct(ScreenshotService $screenshotService, ArrayUtils $arrayUtils)
     {
-        $this->ScreenshotService = $ScreenshotService;
+        $this->screenshotService = $screenshotService;
         $this->arrayUtils = $arrayUtils;
     }
 
@@ -41,7 +41,7 @@ class ScreenshotController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             /** @var Screenshot $screenshot */
-            $screenshot = $this->ScreenshotService->execute($data['url'], $parameters);
+            $screenshot = $this->screenshotService->execute($data['url'], $parameters);
 
             $response = new BinaryFileResponse($screenshot->getPath());
 
