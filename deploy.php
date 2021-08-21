@@ -28,7 +28,7 @@ set('writable_mode', 'chmod');
 
 // Hosts
 
-host('168.119.227.77')
+host('999.999.999.999')
     ->user('deploy')
     ->set('deploy_path', '/var/www/{{application}}');
 
